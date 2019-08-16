@@ -25,3 +25,23 @@ html {
 .w3-bar .w3-button {
   padding: 16px;
 }
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 5vw;
+  border: none;
+  outline: none;
+  background: linear-gradient(to right, #0066ff 0%, #9999ff 100%);
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 100px;
+}
+#myBtn:hover{
+  /* background-color: rgb(72, 114, 177) */
+  background: linear-gradient(to left, #0066ff 0%, #9999ff 100%);
+
+}
