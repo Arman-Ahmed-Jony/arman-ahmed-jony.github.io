@@ -1,80 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Portfolio</title>
-    <style>
-        /* Reset some default styles */
-        body, h1, p {
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arman Ahmed Jony - CV</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      background-color: #f4f4f4;
+      color: #333;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-        }
+         .container {
+       max-width: 900px;
+       margin: 30px auto;
+       background: #fff;
+       padding: 20px;
+       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+       border-radius: 10px;
+     }
 
-        /* Header styles */
-        header {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 2rem 0;
-        }
+     h1, h2, h3 {
+       margin: 0 0 8px;
+       color: #2c3e50;
+     }
 
-        h1 {
-            font-size: 2rem;
-        }
+     h1 {
+       font-size: 1.8em;
+     }
 
-        /* Main content styles */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+     h2 {
+       border-bottom: 2px solid #2c3e50;
+       padding-bottom: 3px;
+       margin-bottom: 10px;
+       font-size: 1.3em;
+     }
 
-        /* Project section styles */
-        .project {
-            margin-bottom: 1rem;
-        }
+     .contact, .skills, .experience, .education {
+       margin-bottom: 15px;
+     }
 
-        .project h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
+     .contact p, .skills ul, .experience ul, .education ul {
+       margin: 3px 0;
+     }
 
-        .project p {
-            font-size: 1rem;
-            color: #777;
-        }
-    </style>
+     .skills ul, .experience ul, .education ul {
+       list-style: none;
+       padding-left: 0;
+     }
+
+     .skills ul li, .experience ul li, .education ul li {
+       margin-bottom: 4px;
+       font-size: 0.9em;
+     }
+
+     .experience-item {
+       margin-bottom: 10px;
+     }
+
+     .experience-item h3 {
+       margin: 0;
+       font-size: 1em;
+       color: #34495e;
+     }
+
+     .experience-item span {
+       font-size: 0.85em;
+       color: #777;
+     }
+
+     .summary p {
+       font-size: 0.9em;
+       line-height: 1.4;
+     }
+
+    a {
+      color: #2980b9;
+      text-decoration: none;
+    }
+
+         a:hover {
+       text-decoration: underline;
+     }
+
+     @media (max-width: 600px) {
+       .container {
+         padding: 15px;
+       }
+     }
+  </style>
 </head>
 <body>
+  <div class="container">
     <header>
-        <h1>Arman Ahmed</h1>
-        <p>Software Engineer</p>
+      <h1>Arman Ahmed Jony</h1>
+      <div class="contact">
+        <p>Dhaka, 1230, Bangladesh</p>
+        <p>Phone: +8801906402798 | Email: <a href="mailto:armanahmedjony786@gmail.com">armanahmedjony786@gmail.com</a></p>
+        <p>Portfolio: <a href="https://www.linkedin.com/in/armanahmedjony" target="_blank">LinkedIn</a> | <a href="https://arman-ahmed-jony.github.io" target="_blank">GitHub Pages</a></p>
+      </div>
     </header>
 
-    <div class="container">
-        <section class="project">
-            <h2>Project 1</h2>
-            <p>A brief description of your first project. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </section>
+    <section class="summary">
+      <h2>Summary</h2>
+      <p>Dynamic Full Stack Developer with a proven track record at IT Conquest, specializing in JavaScript frameworks like React and Vue. Adept at mentoring teams and enhancing software quality through code reviews. Skilled in Agile methodologies, I deliver innovative solutions while fostering collaboration and driving project success.</p>
+    </section>
 
-        <section class="project">
-            <h2>Project 2</h2>
-            <p>Another project you've worked on. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-        </section>
+    <section class="skills">
+      <h2>Skills</h2>
+      <ul>
+        <li>JavaScript and frameworks: Vue, React, Quasar</li>
+        <li>Node.js</li>
+        <li>Version control (Git)</li>
+        <li>Agile methodologies</li>
+      </ul>
+    </section>
 
-        <!-- Add more project sections as needed -->
+    <section class="experience">
+      <h2>Experience</h2>
 
-        <footer>
-            <p>Contact: your@email.com</p>
-        </footer>
-    </div>
+      <div class="experience-item">
+        <h3>IT Conquest - Canada</h3>
+        <span>March 2022 - Current | Software Engineer</span>
+        <ul>
+          <li>Developed software solutions using Node, React, and Vue for various projects.</li>
+          <li>Collaborated with cross-functional teams to define project requirements and specifications.</li>
+          <li>Mentored junior engineers by providing guidance on best coding practices and tools.</li>
+          <li>Participated in code reviews to ensure quality and maintainability of software products.</li>
+        </ul>
+      </div>
+
+      <div class="experience-item">
+        <h3>KEMEDAR.COM</h3>
+        <span>August 2023 - April 2024 | Senior Frontend Developer</span>
+        <ul>
+          <li>Participated in daily standups to discuss progress and blockers during development.</li>
+          <li>Built reusable components and front-end libraries for future use.</li>
+          <li>Designed visual and graphic images for multiple platforms.</li>
+        </ul>
+      </div>
+
+      <div class="experience-item">
+        <h3>Trip Ticket - Australia</h3>
+        <span>February 2022 - July 2022 | Full Stack Developer</span>
+        <ul>
+          <li>Developed responsive web applications using Java frameworks and RESTful APIs.</li>
+          <li>Troubleshot software issues, providing timely solutions for enhanced performance.</li>
+          <li>Maintained version control systems like Git for source code management.</li>
+        </ul>
+      </div>
+
+      <div class="experience-item">
+        <h3>IT Conquest - Dhaka</h3>
+        <span>September 2019 - March 2022 | Frontend Developer</span>
+      </div>
+
+      <div class="experience-item">
+        <h3>Tsunagu - Japan</h3>
+        <span>April 2020 - December 2021 | Full Stack Developer</span>
+      </div>
+    </section>
+
+    <section class="education">
+      <h2>Education</h2>
+      <ul>
+        <li>Bachelor of Computer Science and Engineering, International University of Business Agriculture and Technology, Dhaka (December 2019)</li>
+      </ul>
+    </section>
+  </div>
 </body>
 </html>
