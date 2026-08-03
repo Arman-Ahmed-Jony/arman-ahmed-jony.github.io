@@ -62,6 +62,11 @@
        margin-bottom: 10px;
      }
 
+     .pdf-page-break {
+       page-break-before: always;
+       break-before: page;
+     }
+
      .experience-item h3,
      .project-item h3 {
        margin: 0;
@@ -166,7 +171,7 @@
       <h2>Experience</h2>
 
       <div class="experience-item">
-        <h3>IT Conquest - Canada</h3>
+        <h3>IT Conquest</h3>
         <span>March 2022 - Current | Software Engineer</span>
         <ul>
           <li>Developed software solutions using Node, React, and Vue for various projects.</li>
@@ -186,8 +191,8 @@
         </ul>
       </div>
 
-      <div class="experience-item">
-        <h3>IT Conquest - Dhaka</h3>
+      <div class="experience-item pdf-page-break">
+        <h3>IT Conquest</h3>
         <span>September 2019 - March 2022 | Frontend Developer</span>
       </div>
 
@@ -243,7 +248,8 @@
         filename: 'Arman-Ahmed-Jony-CV.pdf',
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['css', 'legacy'], before: '.pdf-page-break', avoid: ['.experience-item', '.project-item'] }
       };
 
       html2pdf().set(options).from(element).save().then(function () {
