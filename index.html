@@ -39,35 +39,38 @@
        font-size: 1.3em;
      }
 
-     .contact, .skills, .experience, .education {
+     .contact, .skills, .experience, .projects, .education {
        margin-bottom: 15px;
      }
 
-     .contact p, .skills ul, .experience ul, .education ul {
+     .contact p, .skills ul, .experience ul, .projects ul, .education ul {
        margin: 3px 0;
      }
 
-     .skills ul, .experience ul, .education ul {
+     .skills ul, .experience ul, .projects ul, .education ul {
        list-style: none;
        padding-left: 0;
      }
 
-     .skills ul li, .experience ul li, .education ul li {
+     .skills ul li, .experience ul li, .projects ul li, .education ul li {
        margin-bottom: 4px;
        font-size: 0.9em;
      }
 
-     .experience-item {
+     .experience-item,
+     .project-item {
        margin-bottom: 10px;
      }
 
-     .experience-item h3 {
+     .experience-item h3,
+     .project-item h3 {
        margin: 0;
        font-size: 1em;
        color: #34495e;
      }
 
-     .experience-item span {
+     .experience-item span,
+     .project-item span {
        font-size: 0.85em;
        color: #777;
      }
@@ -161,6 +164,31 @@
       <div class="experience-item">
         <h3>Tsunagu - Japan</h3>
         <span>April 2020 - December 2021 | Full Stack Developer</span>
+      </div>
+    </section>
+
+    <section class="projects">
+      <h2>Projects</h2>
+
+      <div class="project-item">
+        <h3>SiSo Suite — <a href="https://sisosuite.com" target="_blank">sisosuite.com</a></h3>
+        <span>Full Stack Developer | React, Symfony, Node.js</span>
+        <ul>
+          <li>Built SiSo Diligence, an AI-powered legal diligence platform for M&amp;A deal teams, spanning interactive dashboards and hybrid Word/online reporting.</li>
+          <li>Developed risk evaluation, budget, and engagements modules to centralize diligence findings and align them with deal execution.</li>
+          <li>Implemented AI Associate capabilities and Node.js scraping publicly available financial data from EDGAR to support diligence workflows and data collection.</li>
+          <li>Delivered full-stack features with React on the frontend and Symfony on the backend for law firm collaboration across workstreams.</li>
+        </ul>
+      </div>
+
+      <div class="project-item">
+        <h3>SuperCards — <a href="https://app.supercards.ca" target="_blank">app.supercards.ca</a></h3>
+        <span>Full Stack Developer | Vue, Laravel</span>
+        <ul>
+          <li>Owned a large portion of board management, enabling teams to manage boards and tickets across different projects.</li>
+          <li>Built the Meetings module for scheduling and managing project meetings.</li>
+          <li>Developed the Bounty module for reward management tied to project and ticket workflows.</li>
+        </ul>
       </div>
     </section>
 
