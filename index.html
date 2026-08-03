@@ -62,11 +62,6 @@
        margin-bottom: 10px;
      }
 
-     .pdf-page-break {
-       page-break-before: always;
-       break-before: page;
-     }
-
      .experience-item h3,
      .project-item h3 {
        margin: 0;
@@ -234,31 +229,184 @@
     </section>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
   <script>
     document.getElementById('download-pdf').addEventListener('click', function () {
       var button = this;
-      var element = document.getElementById('cv');
-
       button.disabled = true;
       button.textContent = 'Preparing PDF...';
 
-      var options = {
-        margin: 10,
-        filename: 'Arman-Ahmed-Jony-CV.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak: { mode: ['css', 'legacy'], before: '.pdf-page-break', avoid: ['.experience-item', '.project-item'] }
-      };
+      try {
+        var jsPDF = window.jspdf.jsPDF;
+        var doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+        var margin = 14;
+        var pageWidth = doc.internal.pageSize.getWidth();
+        var pageHeight = doc.internal.pageSize.getHeight();
+        var maxWidth = pageWidth - margin * 2;
+        var y = margin;
 
-      html2pdf().set(options).from(element).save().then(function () {
+        function clean(text) {
+          return (text || '')
+            .replace(/\u2014|\u2013/g, '-')
+            .replace(/[\u2018\u2019]/g, "'")
+            .replace(/[\u201C\u201D]/g, '"')
+            .replace(/\s+/g, ' ')
+            .trim();
+        }
+
+        function ensureSpace(needed) {
+          if (y + needed > pageHeight - margin) {
+            doc.addPage();
+            y = margin;
+          }
+        }
+
+        function addText(text, opts) {
+          opts = opts || {};
+          var size = opts.size || 10;
+          var style = opts.style || 'normal';
+          var color = opts.color || [51, 51, 51];
+          var gap = opts.gap != null ? opts.gap : 3;
+          var indent = opts.indent || 0;
+          var width = maxWidth - indent;
+
+          doc.setFont('helvetica', style);
+          doc.setFontSize(size);
+          doc.setTextColor(color[0], color[1], color[2]);
+
+          var lines = doc.splitTextToSize(clean(text), width);
+          var lineHeight = size * 0.42;
+          ensureSpace(lines.length * lineHeight + gap);
+          doc.text(lines, margin + indent, y);
+          y += lines.length * lineHeight + gap;
+        }
+
+        function addSectionTitle(title) {
+          y += 2;
+          addText(title, { size: 13, style: 'bold', color: [44, 62, 80], gap: 1 });
+          doc.setDrawColor(44, 62, 80);
+          doc.setLineWidth(0.4);
+          doc.line(margin, y, pageWidth - margin, y);
+          y += 5;
+        }
+
+        function addLinkedTitle(titleEl) {
+          var text = clean(titleEl.textContent);
+          var link = titleEl.querySelector('a');
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(11);
+          doc.setTextColor(52, 73, 94);
+          ensureSpace(6);
+          if (link) {
+            var label = clean(titleEl.childNodes[0].textContent || '') + ' - ';
+            var linkText = clean(link.textContent);
+            doc.text(label, margin, y);
+            var labelWidth = doc.getTextWidth(label);
+            doc.setTextColor(41, 128, 185);
+            doc.textWithLink(linkText, margin + labelWidth, y, { url: link.href });
+          } else {
+            doc.text(text, margin, y);
+          }
+          y += 5;
+        }
+
+        // Header
+        addText(document.querySelector('#cv h1').textContent, {
+          size: 18, style: 'bold', color: [44, 62, 80], gap: 4
+        });
+
+        document.querySelectorAll('#cv .contact p').forEach(function (p) {
+          var links = p.querySelectorAll('a');
+          if (!links.length) {
+            addText(p.textContent, { size: 9, color: [85, 85, 85], gap: 2 });
+            return;
+          }
+
+          // Contact lines with links: write as plain selectable text + link annotations
+          var parts = [];
+          p.childNodes.forEach(function (node) {
+            if (node.nodeType === Node.TEXT_NODE) {
+              parts.push({ type: 'text', value: clean(node.textContent) });
+            } else if (node.nodeName === 'A') {
+              parts.push({ type: 'link', value: clean(node.textContent), url: node.href });
+            }
+          });
+
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(9);
+          ensureSpace(5);
+          var x = margin;
+          parts.forEach(function (part) {
+            if (!part.value) return;
+            if (part.type === 'link') {
+              doc.setTextColor(41, 128, 185);
+              doc.textWithLink(part.value, x, y, { url: part.url });
+            } else {
+              doc.setTextColor(85, 85, 85);
+              doc.text(part.value, x, y);
+            }
+            x += doc.getTextWidth(part.value);
+          });
+          y += 5;
+        });
+
+        y += 2;
+
+        // Summary
+        addSectionTitle('Summary');
+        addText(document.querySelector('#cv .summary p').textContent, { size: 10, gap: 4 });
+
+        // Skills
+        addSectionTitle('Skills');
+        document.querySelectorAll('#cv .skills li').forEach(function (li) {
+          addText('- ' + li.textContent, { size: 9.5, gap: 2 });
+        });
+
+        // Experience
+        addSectionTitle('Experience');
+        document.querySelectorAll('#cv .experience-item').forEach(function (item) {
+          if (item.classList.contains('pdf-page-break')) {
+            doc.addPage();
+            y = margin;
+          }
+
+          var title = item.querySelector('h3');
+          var meta = item.querySelector('span');
+          addText(title.textContent, { size: 11, style: 'bold', color: [52, 73, 94], gap: 1 });
+          if (meta) {
+            addText(meta.textContent, { size: 9, color: [119, 119, 119], gap: 2 });
+          }
+          item.querySelectorAll('li').forEach(function (li) {
+            addText('- ' + li.textContent, { size: 9.5, gap: 2, indent: 2 });
+          });
+          y += 2;
+        });
+
+        // Projects
+        addSectionTitle('Projects');
+        document.querySelectorAll('#cv .project-item').forEach(function (item) {
+          addLinkedTitle(item.querySelector('h3'));
+          var meta = item.querySelector('span');
+          if (meta) {
+            addText(meta.textContent, { size: 9, color: [119, 119, 119], gap: 2 });
+          }
+          item.querySelectorAll('li').forEach(function (li) {
+            addText('- ' + li.textContent, { size: 9.5, gap: 2, indent: 2 });
+          });
+          y += 2;
+        });
+
+        // Education
+        addSectionTitle('Education');
+        document.querySelectorAll('#cv .education li').forEach(function (li) {
+          addText('- ' + li.textContent, { size: 9.5, gap: 2 });
+        });
+
+        doc.save('Arman-Ahmed-Jony-CV.pdf');
+      } finally {
         button.disabled = false;
         button.textContent = 'Download PDF';
-      }).catch(function () {
-        button.disabled = false;
-        button.textContent = 'Download PDF';
-      });
+      }
     });
   </script>
 </body>
