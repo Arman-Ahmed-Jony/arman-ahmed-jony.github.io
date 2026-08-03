@@ -229,7 +229,7 @@
     </section>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     document.getElementById('download-pdf').addEventListener('click', function () {
       var button = this;
@@ -237,6 +237,10 @@
       button.textContent = 'Preparing PDF...';
 
       try {
+        if (!window.jspdf || !window.jspdf.jsPDF) {
+          throw new Error('jsPDF failed to load. Check your network connection and refresh the page.');
+        }
+
         var jsPDF = window.jspdf.jsPDF;
         var doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
         var margin = 14;
@@ -403,6 +407,9 @@
         });
 
         doc.save('Arman-Ahmed-Jony-CV.pdf');
+      } catch (err) {
+        console.error(err);
+        alert(err.message || 'Failed to generate PDF.');
       } finally {
         button.disabled = false;
         button.textContent = 'Download PDF';
