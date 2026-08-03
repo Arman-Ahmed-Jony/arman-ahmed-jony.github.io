@@ -89,15 +89,50 @@
        text-decoration: underline;
      }
 
+     .download-bar {
+       max-width: 900px;
+       margin: 20px auto 0;
+       text-align: right;
+       padding: 0 10px;
+     }
+
+     .download-btn {
+       background: #2c3e50;
+       color: #fff;
+       border: none;
+       padding: 10px 18px;
+       font-size: 0.9em;
+       font-family: inherit;
+       border-radius: 6px;
+       cursor: pointer;
+     }
+
+     .download-btn:hover {
+       background: #1a252f;
+     }
+
+     .download-btn:disabled {
+       opacity: 0.7;
+       cursor: wait;
+     }
+
      @media (max-width: 600px) {
        .container {
          padding: 15px;
+       }
+
+       .download-bar {
+         text-align: center;
        }
      }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="download-bar">
+    <button type="button" class="download-btn" id="download-pdf">Download PDF</button>
+  </div>
+
+  <div class="container" id="cv">
     <header>
       <h1>Arman Ahmed Jony</h1>
       <div class="contact">
@@ -193,5 +228,32 @@
       </ul>
     </section>
   </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    document.getElementById('download-pdf').addEventListener('click', function () {
+      var button = this;
+      var element = document.getElementById('cv');
+
+      button.disabled = true;
+      button.textContent = 'Preparing PDF...';
+
+      var options = {
+        margin: 10,
+        filename: 'Arman-Ahmed-Jony-CV.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(options).from(element).save().then(function () {
+        button.disabled = false;
+        button.textContent = 'Download PDF';
+      }).catch(function () {
+        button.disabled = false;
+        button.textContent = 'Download PDF';
+      });
+    });
+  </script>
 </body>
 </html>
